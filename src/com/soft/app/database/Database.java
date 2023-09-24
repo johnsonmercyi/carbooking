@@ -19,4 +19,9 @@ public class Database {
     return null;
     
   }
+
+  //returns customers
+  public Customer[] getCustomers() {
+    return customers;
+  }
 }

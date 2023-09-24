@@ -4,15 +4,17 @@ import java.util.UUID;
 
 public class Customer {
   private UUID id;
+  private String customerCode;
   private String name;
   private String address;
   private String phone;
   private String gender;
   private String email;
 
-  public Customer(String name, String address, String phone, String gender, String email) {
+  public Customer(String customerCode, String name, String address, String phone, String gender, String email) {
     
     this.id = UUID.randomUUID();
+    this.customerCode = customerCode;
     this.name = name;
     this.address = address;
     this.address = address;
@@ -22,6 +24,12 @@ public class Customer {
   }
 
 
+  /**
+   * @param customerCode the customerCode to set
+   */
+  public void setCustomerCode(String customerCode) {
+    this.customerCode = customerCode;
+  }
 
   /**
    * @param name the name to set
@@ -73,6 +81,13 @@ public class Customer {
    */
   public UUID getId() {
     return id;
+  }
+
+  /**
+   * @return the customerCode
+   */
+  public String getCustomerCode() {
+    return customerCode;
   }
 
   /**
