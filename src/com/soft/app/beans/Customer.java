@@ -2,6 +2,9 @@ package com.soft.app.beans;
 
 import java.util.UUID;
 
+/**
+ * Customer class
+ */
 public class Customer {
   private UUID id;
   private String customerCode;
