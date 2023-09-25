@@ -14,6 +14,7 @@ public class Customer {
   private String gender;
   private String email;
   private String demo = "demo here nothing more...";
+  private static int code = 1;
 
   public Customer(String customerCode, String name, String address, String phone, String gender, String email) {
     
@@ -26,8 +27,12 @@ public class Customer {
     this.gender = gender;
     this.email = email;
   }
-
-
+ /**
+   *  the generatecustomerCode 
+   */
+  public static String generateCustomerCode(){ 
+    return "CST" + String.format("%03d", code++);
+  }
   /**
    * @param customerCode the customerCode to set
    */

@@ -49,7 +49,7 @@ public class App {
                 Customer customer = registerCustomer();
                 db.saveCustomer(customer);
 
-                System.out.println("Customer " + db.getCustomers()[0].getName() + " is registered successfully!");
+                System.out.println("Customer " +db.getCustomers()[0].getCustomerCode()+""+ db.getCustomers()[0].getName() + " is registered successfully!");
               }
 
               break;
@@ -168,9 +168,10 @@ public class App {
       //CST001
       //CST002
       //...
+      customerCode = Customer.generateCustomerCode();
 
       if (!name.isEmpty() && !address.isEmpty() && !phone.isEmpty() && !gender.isEmpty() && !email.isEmpty()) {
-        return new Customer("CST001", name, address, phone, gender, email);
+        return new Customer(customerCode, name, address, phone, gender, email);
       }
     }
   }
