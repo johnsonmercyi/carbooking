@@ -2,6 +2,7 @@ package com.soft.app;
 
 import java.util.Scanner;
 
+import com.soft.app.beans.Car;
 import com.soft.app.beans.Customer;
 import com.soft.app.database.Database;
 
@@ -9,7 +10,7 @@ public class App {
 
   private Database db;
 
-  //Constructor
+  // Constructor
   public App() {
     db = new Database();// initialize the database object
   }
@@ -22,58 +23,62 @@ public class App {
     while (true) {
       try {
 
-        //Dislays options
+        // Dislays options
         displayWelcomeOptions();
 
-        //Prompt for input
+        // Prompt for input
         System.out.print("Enter Option: ");
 
         if (scan.hasNextInt()) {
-          //The choice is an integer
+          // The choice is an integer
           choice = scan.nextInt();
 
-          //Run validation on choice
+          // Run validation on choice
           boolean isValid = Validations.validateOption(choice);
           if (isValid) {
-            //rest of the implementation
+            // rest of the implementation
             if (choice != 7) {
               System.out.print("Enter customer code: ");
               String customerCode = scan.next();
 
               boolean isUserAuth = authenticateCustomer(customerCode);
               if (isUserAuth) {
-                //Continue
+                // Continue
                 System.out.println("Customer is found!");
               } else {
-                //Do customer registration
+                // Do customer registration
                 Customer customer = registerCustomer();
                 db.saveCustomer(customer);
 
-                System.out.println("Customer " +db.getCustomers()[0].getCustomerCode()+""+ db.getCustomers()[0].getName() + " is registered successfully!");
+                // Process user choice
+                if (choice == 1) {
+                  System.out.println("\nYour registration was successful " + customer.getName() + "(" + customer.getCustomerCode() + ")!");
+                  bookACar(customer);
+                }
               }
 
               break;
             } else {
-              //If choice is 7 then exit program
+              // If choice is 7 then exit program
               System.exit(0);
             }
-            
+
           } else {
             System.out.println(choice + " is not valid");
           }
 
         } else {
           System.out.println("Invalid input. Please enter a number.");
-          scan.nextLine();//consume the input
+          scan.nextLine();// consume the input
           continue; // This resumes the loop
         }
-  
+
         // get the name
         // get the address
         // get the phone
         // get the gender
         // get the email
-  
+
       } catch (Exception e) {
         // TODO: handle exception
         System.out.println("Exception: " + e.getMessage());
@@ -97,17 +102,59 @@ public class App {
     System.out.println("7 - Exit program\n");
   }
 
+  private int displayCarOptions() {
+    System.out.println("Welcome to the Car booking terminal");
+    System.out.println("\nPlease select your preferred car:");
+    int count = 0;
+    for (Car car : db.getCars()) {
+      if (car != null) {
+        System.out.println(
+            ++count + " - " + car.getBrand() + " " + car.getType() + " Car (" + car.getNoOfSeats() + " seaters)");
+      }
+    }
+    return count;
+  }
+
+  private void bookACar(Customer customer) {
+    Scanner scan = new Scanner(System.in);
+    while (true) {
+      int carCount = displayCarOptions();
+      System.out.print("Enter option: ");
+      int choice;
+
+      if (scan.hasNextInt()) {
+        choice = scan.nextInt();
+
+        if (choice > 1 && choice <= carCount) {
+          if (choice == 1) {
+            //book car 1
+          } else if (choice == 2) {
+
+          }
+        } else {
+          System.out.println("Sorry! Your input is out of range.");
+          scan.nextInt();// consume the input
+          continue;
+        }
+      } else {
+        System.out.println("Invalid input. Please select a number!");
+        scan.nextLine();//consume the input
+        continue;
+      }
+    }
+  }
+
   public boolean login(String id) {
     return true;
   }
 
   private boolean authenticateCustomer(String customerCode) {
-    //check that input is valid
+    // check that input is valid
     if (customerCode.trim().isEmpty() || customerCode == null) {
       return false;
     }
 
-    //Do authentication
+    // Do authentication
     for (Customer customer : db.getCustomers()) {
       if (customer == null) {
         return false;
@@ -126,7 +173,7 @@ public class App {
     String customerCode, name, address, phone, gender, email;
 
     while (true) {
-      
+
       System.out.println("\nCustomer registration terminal.\nPlease provide your customer registration information");
 
       System.out.print("Enter name: ");
@@ -164,10 +211,10 @@ public class App {
         continue;
       }
 
-      //Generate the customer code in the following format
-      //CST001
-      //CST002
-      //...
+      // Generate the customer code in the following format
+      // CST001
+      // CST002
+      // ...
       customerCode = Customer.generateCustomerCode();
 
       if (!name.isEmpty() && !address.isEmpty() && !phone.isEmpty() && !gender.isEmpty() && !email.isEmpty()) {
@@ -178,7 +225,7 @@ public class App {
 
   private class Validations {
     public static boolean validateOption(int choice) {
-      //check if option falls into valid range
+      // check if option falls into valid range
       if (choice < 1 || choice > 7) {
         return false;
       }
@@ -188,9 +235,9 @@ public class App {
     public static boolean validateField(String field, String value) {
       if (value.trim().isEmpty() || value == null) {
         return false;
-      } 
+      }
 
-      //trim user input
+      // trim user input
       value = value.trim();
 
       if (field.equals("phone")) {
@@ -202,26 +249,26 @@ public class App {
           return false;
         }
       } else if (field.equals("email")) {
-        //example@gmail.com
+        // example@gmail.com
         String[] emailParts = value.split("@");
         if (emailParts.length == 2) {
           System.out.println("Splitted!");
           if (emailParts[0].length() == 0 || emailParts[1].length() == 0) {
             System.out.println("Bad!");
-            //E.g. @gmail.com
+            // E.g. @gmail.com
             return false;
           }
 
           if (!emailParts[1].contains(".")) {
             return false;
           }
-          
-        } else{
+
+        } else {
           System.out.println("No splitted!");
           return false;
         }
       }
-      
+
       return true;
     }
   }

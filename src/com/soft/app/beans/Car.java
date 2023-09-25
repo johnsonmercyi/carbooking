@@ -1,32 +1,31 @@
 package com.soft.app.beans;
 
-public class Car {
-  private String id;
-  private String brand;
-  private String type;
-  private String numberPlate;
-  private String noOfSeats;
+import java.util.UUID;
 
-  public Car(String id, String brand, String type, String numberPlate, String noOfSeats) {
-    this.id = id;
+import com.soft.app.util.CarTypes;
+
+public class Car {
+  private UUID id;
+  private String brand;
+  private CarTypes type;
+  private String numberPlate;
+  private int noOfSeats;
+  private static int status;
+
+  public Car(String brand, CarTypes type, String numberPlate, int noOfSeats, int status) {
+    this.id = UUID.randomUUID();
     this.brand = brand;
     this.type = type;
     this.numberPlate = numberPlate;
     this.noOfSeats = noOfSeats;
+    Car.status = status;
   }
 
   /**
    * @return the id
    */
-  public String getId() {
+  public UUID getId() {
     return id;
-  }
-
-  /**
-   * @param id the id to set
-   */
-  public void setId(String id) {
-    this.id = id;
   }
 
   /**
@@ -60,30 +59,49 @@ public class Car {
   /**
    * @return the noOfSeats
    */
-  public String getNoOfSeats() {
+  public int getNoOfSeats() {
     return noOfSeats;
   }
 
   /**
    * @param noOfSeats the noOfSeats to set
    */
-  public void setNoOfSeats(String noOfSeats) {
+  public void setNoOfSeats(int noOfSeats) {
     this.noOfSeats = noOfSeats;
   }
 
   /**
    * @return the type
    */
-  public String getType() {
+  public CarTypes getType() {
     return type;
   }
 
   /**
    * @param type the type to set
    */
-  public void setType(String type) {
+  public void setType(CarTypes type) {
     this.type = type;
   }
 
+  
+
+  /**
+   * @param status the status to set
+   */
+  public static void setStatus(int status) {
+    Car.status = status;
+  }
+
+  public String toString() {
+    return String.format("%s Car - %s - %s", brand, type, numberPlate);
+  }
+
+  /**
+   * @return the status
+   */
+  public static int getStatus() {
+    return status;
+  }
   
 }

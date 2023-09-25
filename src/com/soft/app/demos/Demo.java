@@ -1,6 +1,10 @@
 package com.soft.app.demos;
 
+import java.util.Arrays;
+
+import com.soft.app.beans.Car;
 import com.soft.app.beans.Customer;
+import com.soft.app.database.Database;
 
 public class Demo {
   static int number = 1;
@@ -46,18 +50,32 @@ public class Demo {
     // doLoop();
 
     //access num and num1
-    Demo obj1 = new Demo();
-    Demo obj2 = new Demo();
-    Demo.num1 = 20;
+    // Demo obj1 = new Demo();
+    // Demo obj2 = new Demo();
+    // Demo.num1 = 20;
 
-    obj1.num = 5;
-    obj2.num = 10;
+    // obj1.num = 5;
+    // obj2.num = 10;
 
-    System.out.println("> Object 1 num: " + obj1.num);
-    System.out.println("> Object 2 num: " + obj2.num);
+    // System.out.println("> Object 1 num: " + obj1.num);
+    // System.out.println("> Object 2 num: " + obj2.num);
 
-    System.out.println("\n> Object 1 num1: " + obj1.num1);
-    System.out.println("> Object 2 num1: " + obj2.num1);
+    // System.out.println("\n> Object 1 num1: " + obj1.num1);
+    // System.out.println("> Object 2 num1: " + obj2.num1);
+
+    //Test customer code generation
+    // int count = 0;
+    // while (count < 5) {
+    //   String code = Customer.generateCustomerCode();
+    //   System.out.println("Generated code: " + code);
+    //   count ++;
+    // }
+
+    Database db = new Database();
+
+    for (Car car : db.getCars()) {
+      System.out.println(car);
+    }
 
   }
 }

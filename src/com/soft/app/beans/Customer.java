@@ -14,7 +14,7 @@ public class Customer {
   private String gender;
   private String email;
   private String demo = "demo here nothing more...";
-  private static int code = 1;
+  public static int code = 1;
 
   public Customer(String customerCode, String name, String address, String phone, String gender, String email) {
     
