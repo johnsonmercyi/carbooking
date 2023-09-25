@@ -13,6 +13,7 @@ public class Customer {
   private String phone;
   private String gender;
   private String email;
+  private String demo = "demo here nothing more...";
 
   public Customer(String customerCode, String name, String address, String phone, String gender, String email) {
     
