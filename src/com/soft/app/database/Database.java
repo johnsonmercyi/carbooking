@@ -29,6 +29,17 @@ public class Database {
     
   }
 
+  public Customer fetchCustomer(String customerCode) {
+    for (Customer cst : getCustomers()) {
+      if (cst != null) {
+        if (cst.getCustomerCode() == customerCode) {
+          return cst;
+        }
+      }
+    }
+    return null;
+  }
+
   /**
    * Populate car array
    */

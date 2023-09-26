@@ -44,17 +44,15 @@ public class App {
               boolean isUserAuth = authenticateCustomer(customerCode);
               if (isUserAuth) {
                 // Continue
-                System.out.println("Customer is found!");
+                // Process user choice
+                processUserChoice(choice, db.fetchCustomer(customerCode));
               } else {
                 // Do customer registration
                 Customer customer = registerCustomer();
                 db.saveCustomer(customer);
 
                 // Process user choice
-                if (choice == 1) {
-                  System.out.println("\nYour registration was successful " + customer.getName() + "(" + customer.getCustomerCode() + ")!");
-                  bookACar(customer);
-                }
+                processUserChoice(choice, customer);
               }
 
               break;
@@ -73,12 +71,6 @@ public class App {
           continue; // This resumes the loop
         }
 
-        // get the name
-        // get the address
-        // get the phone
-        // get the gender
-        // get the email
-
       } catch (Exception e) {
         // TODO: handle exception
         System.out.println("Exception: " + e.getMessage());
@@ -87,6 +79,16 @@ public class App {
 
     }
 
+  }
+
+  private void processUserChoice(int choice, Customer customer) {
+    if (choice == 1) {
+      System.out.println(
+          "\nYour registration was successful " + customer.getName() + "(" + customer.getCustomerCode() + ")!");
+      bookACar(customer);
+    } else if (choice == 2) {
+      //implementation of when user choice is 2...
+    }
   }
 
   private void displayWelcomeOptions() {

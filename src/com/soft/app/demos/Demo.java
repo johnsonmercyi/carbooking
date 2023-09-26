@@ -46,6 +46,10 @@ public class Demo {
     }
   }
 
+  public static void checkArrayType(Object[] array) {
+    System.out.println("Is array of type Customer? " + (array instanceof Customer[]));
+  }
+
   public static void main(String[] args) {
     // doLoop();
 
@@ -71,11 +75,21 @@ public class Demo {
     //   count ++;
     // }
 
-    Database db = new Database();
+    // Database db = new Database();
 
-    for (Car car : db.getCars()) {
-      System.out.println(car);
-    }
+    // for (Car car : db.getCars()) {
+    //   System.out.println(car);
+    // }
+
+    Customer[] cst = new Customer[1];
+    String[] str = new String[5];
+    Car[] cars = new Car[2];
+    
+    cars[0] = new Car(null, null, null, number, num1);
+    Car car = cars[0];
+    String brand = car.getBrand();
+
+    checkArrayType(str);
 
   }
 }
