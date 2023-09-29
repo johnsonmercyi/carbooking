@@ -39,7 +39,10 @@ public class Booking {
 
   @Override
   public String toString() {
-    return "Booking [refNo=" + refNo + ", customer=" + customer + ", car=" + car + "]";
+    return "\nRef No: " + getRefNo()+
+    "\nCustomer: " + getCustomer().getName()+
+    "\nCustomer: " + getCustomer().getCustomerCode()+
+    "\nCar: " + getCar();
   }
 
   

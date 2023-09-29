@@ -90,7 +90,8 @@ public class Car {
   public void setStatus(int status) {
     this.status = status;
   }
-
+  
+  @Override
   public String toString() {
     return String.format("%s Car - %s - %s", brand, type, numberPlate);
   }
@@ -101,5 +102,7 @@ public class Car {
   public int getStatus() {
     return status;
   }
+
+
   
 }

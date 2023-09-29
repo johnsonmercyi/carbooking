@@ -134,8 +134,12 @@ public class Customer {
   }
   @Override
   public String toString() {
-    return "Customer [id=" + id + ", customerCode=" + customerCode + ", name=" + name + ", address=" + address
-        + ", phone=" + phone + ", gender=" + gender + ", email=" + email + "]";
+    return "\nCustomer Code: " + getCustomerCode()+
+    "\nName: " + getName()+
+    "\nAddress: " + getAddress()+
+    "\nPhone: " + getPhone()+
+    "\nGender: " + getGender()+
+    "\nEmail: " + getEmail();
   }
 
   

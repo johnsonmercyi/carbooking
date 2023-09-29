@@ -60,14 +60,7 @@ public class Database {
     for (Customer customer : getCustomers()) {
       if (customer != null) {
         ++count;
-        System.out.println(
-          "\nCustomer Code: " + customer.getCustomerCode()+
-          "\nName: " + customer.getName()+
-          "\nAddress: " + customer.getAddress()+
-          "\nPhone: " + customer.getPhone()+
-          "\nGender: " + customer.getGender()+
-          "\nEmail: " + customer.getEmail()
-        );
+        System.out.println(customer);
       }
     }
     if(count == 0){
@@ -82,12 +75,7 @@ public class Database {
       if (booking != null) {
         System.out.println();
         System.out.println("# BOOKING " + ++count);
-        System.out.println(
-          "\nRef No: " + booking.getRefNo()+
-          "\nCustomer: " + booking.getCustomer().getName()+
-          "\nCustomer: " + booking.getCustomer().getCustomerCode()+
-          "\nCar: " + booking.getCar()
-        );
+        System.out.println(booking);
       }  
     }
     if(count == 0){
