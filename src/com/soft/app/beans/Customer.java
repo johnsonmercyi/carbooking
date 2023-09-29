@@ -13,7 +13,6 @@ public class Customer {
   private String phone;
   private String gender;
   private String email;
-  private String demo = "demo here nothing more...";
   public static int code = 1;
 
   public Customer(String customerCode, String name, String address, String phone, String gender, String email) {
@@ -31,7 +30,7 @@ public class Customer {
    *  the generatecustomerCode 
    */
   public static String generateCustomerCode(){ 
-    return "CST" + String.format("%03d", code++);
+    return ("CST" + String.format("%03d", code++)).toUpperCase();
   }
   /**
    * @param customerCode the customerCode to set
@@ -133,4 +132,11 @@ public class Customer {
   public String getEmail() {
     return email;
   }
+  @Override
+  public String toString() {
+    return "Customer [id=" + id + ", customerCode=" + customerCode + ", name=" + name + ", address=" + address
+        + ", phone=" + phone + ", gender=" + gender + ", email=" + email + "]";
+  }
+
+  
 }

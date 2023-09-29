@@ -10,7 +10,7 @@ public class Car {
   private CarTypes type;
   private String numberPlate;
   private int noOfSeats;
-  private static int status;
+  private int status;
 
   public Car(String brand, CarTypes type, String numberPlate, int noOfSeats, int status) {
     this.id = UUID.randomUUID();
@@ -18,7 +18,7 @@ public class Car {
     this.type = type;
     this.numberPlate = numberPlate;
     this.noOfSeats = noOfSeats;
-    Car.status = status;
+    this.status = status;
   }
 
   /**
@@ -83,14 +83,12 @@ public class Car {
   public void setType(CarTypes type) {
     this.type = type;
   }
-
   
-
   /**
    * @param status the status to set
    */
-  public static void setStatus(int status) {
-    Car.status = status;
+  public void setStatus(int status) {
+    this.status = status;
   }
 
   public String toString() {
@@ -100,7 +98,7 @@ public class Car {
   /**
    * @return the status
    */
-  public static int getStatus() {
+  public int getStatus() {
     return status;
   }
   
