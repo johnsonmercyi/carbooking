@@ -1,5 +1,7 @@
 package com.soft.app.database;
 
+import java.util.UUID;
+
 import com.soft.app.beans.Booking;
 import com.soft.app.beans.Car;
 import com.soft.app.beans.Customer;
@@ -68,6 +70,16 @@ public class Database {
     }
   }
 
+  //fetch car by id
+  public Car fetchCarById(String id) {
+    for(Car car : getCars()){
+      if (car.getId().equals(UUID.fromString(id))) {
+        return car;
+      }
+    }
+    return null;
+  }
+
   //fetch all bookings
   public void fetchAllBookings(){
     int count = 0;
@@ -102,13 +114,10 @@ public class Database {
     }
   }
   //set car status to 1 when car he chosen by the user
-  public boolean setCarStatus(int index){
-    if(getCars()== null || index <= 0 || index > getCars().length)
-        return false;
-
-    for(int i=0; i<getCars().length; i++){
-      if(i == index-1){
-        getCars()[i].setStatus(1);
+  public boolean setCarStatus(Car car, int status){
+    for (Car c : getCars()) {
+      if (car.getId().equals(c.getId())) {
+        c.setStatus(status);
         return true;
       }
     }

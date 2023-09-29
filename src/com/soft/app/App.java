@@ -10,10 +10,13 @@ import com.soft.app.database.Database;
 public class App {
 
   private Database db;
+  private int i = 0;
+  private String[][] carDetails;
 
   // Constructor
   public App() {
     db = new Database();// initialize the database object
+    carDetails = new String[db.getCars().length][2];
   }
 
   public void welcome() {
@@ -143,19 +146,36 @@ public class App {
   private int displayCarOptions() {
     System.out.println("Welcome to the Car booking terminal");
     System.out.println("\nPlease select your preferred car OR Press 0 to go back to Main Options:");
+
     int count = 0;
-    
-    for (Car car : db.getCars()) {
+    Car[] cars = db.getCars();
+    i = 0;
+    carDetails = new String[cars.length][2];
+
+    for (int i = 0; i < cars.length; i++) {
       //System.out.println("car name: "+ car.getBrand()+" - "+car.getStatus());
-      if (car != null && car.getStatus() == 0) {
+      if (cars[i] != null && cars[i].getStatus() == 0) {
+        storeUserCarChoice(i, cars[i]);
         System.out.println(
-            ++count + " - " + car.getBrand() + " " + car.getType() + " Car (" + car.getNoOfSeats() + " seaters)");
-      }else if(count == 0){
-        System.out.println("***No Car Avaliable for Booking***");
-      }
+            ++count + " - " + cars[i].getBrand() + " " + cars[i].getType() + " Car (" + cars[i].getNoOfSeats() + " seaters)");
+      } 
+      
+      //Not neccessary
+      // else if(count == 0){
+      //   System.out.println("***No Car Avaliable for Booking***");
+      // }
     }
  
     return count;
+  }
+
+  
+  private String[][] storeUserCarChoice(int index, Car car) {
+    carDetails[i][0] = Integer.toString(index);
+    carDetails[i][1] = car.getId().toString();
+    i++;
+
+    return carDetails;
   }
 
   private void bookACar(Customer customer) {
@@ -173,12 +193,20 @@ public class App {
             welcome(); 
             break;
           }
-          //change Car status to 1 and return true
-          if (db.setCarStatus(choice)){
-                Booking book = new Booking(customer, db.getCars()[--choice]);
-                // save booking
-                db.saveBooking(book);
-                System.out.println("Congratulations! Your Booking was successful");
+
+          //Get car ready for booking
+          String[] detail = carDetails[--choice];
+          Car car = db.fetchCarById(detail[1]);
+
+          //Do the booking
+          Booking book = new Booking(customer, car);
+          // save booking
+          Booking booked = db.saveBooking(book);
+
+          if (booked != null){
+            //change Car status to 1 and return true
+            db.setCarStatus(car, 1);
+            System.out.println("Congratulations! Your Booking was successful");
           }else {
             System.out.println("Sorry! You can't book this car now");
             continue;
