@@ -2,6 +2,7 @@ package com.soft.app;
 
 import java.util.Scanner;
 
+import com.soft.app.beans.Booking;
 import com.soft.app.beans.Car;
 import com.soft.app.beans.Customer;
 import com.soft.app.database.Database;
@@ -39,19 +40,23 @@ public class App {
             // rest of the implementation
             if (choice != 7) {
               System.out.print("Enter customer code: ");
-              String customerCode = scan.next();
+              String customerCode = scan.next().toUpperCase();
 
               boolean isUserAuth = authenticateCustomer(customerCode);
               if (isUserAuth) {
                 // Continue
+                System.out.println("Customer is found!");
                 // Process user choice
                 processUserChoice(choice, db.fetchCustomer(customerCode));
+                
               } else {
                 // Do customer registration
+                System.out.println("Customer not found!");
                 Customer customer = registerCustomer();
                 db.saveCustomer(customer);
 
                 // Process user choice
+                System.out.println("\nYour registration was successful ");
                 processUserChoice(choice, customer);
               }
 
@@ -71,6 +76,12 @@ public class App {
           continue; // This resumes the loop
         }
 
+        // get the name
+        // get the address
+        // get the phone
+        // get the gender
+        // get the email
+
       } catch (Exception e) {
         // TODO: handle exception
         System.out.println("Exception: " + e.getMessage());
@@ -84,11 +95,36 @@ public class App {
   private void processUserChoice(int choice, Customer customer) {
     if (choice == 1) {
       System.out.println(
-          "\nYour registration was successful " + customer.getName() + "(" + customer.getCustomerCode() + ")!");
+          "\nCustomer Details: " + customer.getName() + "(" + customer.getCustomerCode() + ")!");
       bookACar(customer);
+      welcome();
     } else if (choice == 2) {
       //implementation of when user choice is 2...
+        System.out.println("List of All Customers");
+        db.fetchAllCustomer();
+        welcome();
+    } else if (choice == 3){
+        System.out.println("List of All Bookings");
+        db.fetchAllBookings();
+        welcome();
+    } else if (choice == 4){
+        System.out.println("List of All Available Cars");
+        db.allAvaiableCars();
+        welcome();
+    } else if (choice == 5){
+        System.out.println("List of Available Electric Cars");
+        db.allAvaiableElectricCars();
+        welcome();
+    } else if (choice == 6){
+        System.out.println("List of Customers and booked Cars");
+        db.allCustomerandCars();
+        welcome();
+    } else if (choice == 7){
+        exit(0);
     }
+  }
+
+  private void exit(int i) {
   }
 
   private void displayWelcomeOptions() {
@@ -106,14 +142,19 @@ public class App {
 
   private int displayCarOptions() {
     System.out.println("Welcome to the Car booking terminal");
-    System.out.println("\nPlease select your preferred car:");
+    System.out.println("\nPlease select your preferred car OR Press 0 to go back to Main Options:");
     int count = 0;
+    
     for (Car car : db.getCars()) {
-      if (car != null) {
+      //System.out.println("car name: "+ car.getBrand()+" - "+car.getStatus());
+      if (car != null && car.getStatus() == 0) {
         System.out.println(
             ++count + " - " + car.getBrand() + " " + car.getType() + " Car (" + car.getNoOfSeats() + " seaters)");
+      }else if(count == 0){
+        System.out.println("***No Car Avaliable for Booking***");
       }
     }
+ 
     return count;
   }
 
@@ -127,11 +168,20 @@ public class App {
       if (scan.hasNextInt()) {
         choice = scan.nextInt();
 
-        if (choice > 1 && choice <= carCount) {
-          if (choice == 1) {
-            //book car 1
-          } else if (choice == 2) {
-
+        if (choice >= 0 && choice <= carCount) {
+          if(choice == 0){
+            welcome(); 
+            break;
+          }
+          //change Car status to 1 and return true
+          if (db.setCarStatus(choice)){
+                Booking book = new Booking(customer, db.getCars()[--choice]);
+                // save booking
+                db.saveBooking(book);
+                System.out.println("Congratulations! Your Booking was successful");
+          }else {
+            System.out.println("Sorry! You can't book this car now");
+            continue;
           }
         } else {
           System.out.println("Sorry! Your input is out of range.");
@@ -277,7 +327,6 @@ public class App {
 
   public static void main(String[] args) {
     App app = new App();
-
     app.welcome();
   }
 }
