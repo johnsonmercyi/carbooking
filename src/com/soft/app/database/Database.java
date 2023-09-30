@@ -62,11 +62,13 @@ public class Database {
     for (Customer customer : getCustomers()) {
       if (customer != null) {
         ++count;
+        System.out.println();
+        System.out.println("# CUSTOMER " + ++count);
         System.out.println(customer);
       }
     }
     if(count == 0){
-        System.out.println("No Record Found");
+        System.out.println("\nNo Record Found");
     }
   }
 
@@ -91,26 +93,26 @@ public class Database {
       }  
     }
     if(count == 0){
-        System.out.println("No Available Bookings");
+        System.out.println("\nNo Available Bookings");
     }
   }
 
-  //fetch all user and booked cars
-  public void allCustomerandCars(){
+  //fetch all user booked cars
+  public void allCustomerBookedCars(Customer customer){
     int count = 0;
     for (Booking booking : getBookings()) {
-      if (booking != null) {
+      if (booking != null && booking.getCustomer().getCustomerCode().equals(customer.getCustomerCode())) {
         System.out.println();
         System.out.println("USER BOOKED CARS #" + ++count);
         System.out.println(
-          "\nCustomer: " + booking.getCustomer()+
+          "\nCustomer: " + booking.getCustomer().getName()+
           "\nCar: " + booking.getCar()
         );
       }
       
     }
     if(count == 0){
-        System.out.println("No record available");
+        System.out.println("\nNo record available");
     }
   }
   //set car status to 1 when car he chosen by the user
@@ -159,7 +161,7 @@ public class Database {
       }
     }
     if(count == 0){
-        System.out.println("No Avaiable Electric Cars");
+        System.out.println("\nNo Avaiable Electric Cars");
     }
   }
   //fetch Customers and booked Cars
