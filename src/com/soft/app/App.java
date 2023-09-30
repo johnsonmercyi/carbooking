@@ -103,24 +103,24 @@ public class App {
       welcome();
     } else if (choice == 2) {
       //implementation of when user choice is 2...
-        System.out.println("List of All Customers");
+        System.out.println("\n***List of All Customers***");
         db.fetchAllCustomer();
         welcome();
     } else if (choice == 3){
-        System.out.println("List of All Bookings");
+        System.out.println("\nList of All Bookings***");
         db.fetchAllBookings();
         welcome();
     } else if (choice == 4){
-        System.out.println("List of All Available Cars");
+        System.out.println("\n***List of All Available Cars***");
         db.allAvaiableCars();
         welcome();
     } else if (choice == 5){
-        System.out.println("List of Available Electric Cars");
+        System.out.println("\n***List of Available Electric Cars***");
         db.allAvaiableElectricCars();
         welcome();
     } else if (choice == 6){
-        System.out.println("List of Customers and booked Cars");
-        db.allCustomerandCars();
+        System.out.println("\n***List of Customer booked Cars***");
+        db.allCustomerBookedCars(customer);
         welcome();
     } else if (choice == 7){
         exit(0);
@@ -159,29 +159,27 @@ public class App {
         System.out.println(
             ++count + " - " + cars[i].getBrand() + " " + cars[i].getType() + " Car (" + cars[i].getNoOfSeats() + " seaters)");
       } 
-      
-      //Not neccessary
-      // else if(count == 0){
-      //   System.out.println("***No Car Avaliable for Booking***");
-      // }
     }
  
     return count;
   }
 
   
-  private String[][] storeUserCarChoice(int index, Car car) {
+  private void storeUserCarChoice(int index, Car car) {
     carDetails[i][0] = Integer.toString(index);
     carDetails[i][1] = car.getId().toString();
     i++;
 
-    return carDetails;
+    //return carDetails;
   }
 
   private void bookACar(Customer customer) {
     Scanner scan = new Scanner(System.in);
     while (true) {
       int carCount = displayCarOptions();
+      if(carCount == 0){
+        System.out.println("\n***No Car Available for Booking. Press 0 to go to Main Options***\n");
+      }
       System.out.print("Enter option: ");
       int choice;
 
@@ -194,9 +192,11 @@ public class App {
             break;
           }
 
+          
           //Get car ready for booking
           String[] detail = carDetails[--choice];
           Car car = db.fetchCarById(detail[1]);
+          
 
           //Do the booking
           Booking book = new Booking(customer, car);
@@ -332,9 +332,9 @@ public class App {
         // example@gmail.com
         String[] emailParts = value.split("@");
         if (emailParts.length == 2) {
-          System.out.println("Splitted!");
+          //System.out.println("Splitted!");
           if (emailParts[0].length() == 0 || emailParts[1].length() == 0) {
-            System.out.println("Bad!");
+            //System.out.println("Bad!");
             // E.g. @gmail.com
             return false;
           }
@@ -344,7 +344,7 @@ public class App {
           }
 
         } else {
-          System.out.println("No splitted!");
+          //System.out.println("No splitted!");
           return false;
         }
       }
