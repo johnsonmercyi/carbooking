@@ -303,7 +303,7 @@ public class App {
     }
   }
 
-  private class Validations {
+  private static class Validations {
     public static boolean validateOption(int choice) {
       // check if option falls into valid range
       if (choice < 1 || choice > 7) {
