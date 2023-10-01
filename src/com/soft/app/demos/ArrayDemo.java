@@ -15,6 +15,13 @@ public class ArrayDemo {
     fruitsStores[rowIndex][1] = secondFruit;
     rowIndex++; // increment row index for next assignment
   }
+  
+
+  @Override
+  public String toString() {
+    return "ArrayDemo [fruitsStores=" + Arrays.toString(fruitsStores) + "]";
+  }
+
 
   public static void main(String[] args) {
     
@@ -40,5 +47,12 @@ public class ArrayDemo {
      String fruit = ad.fruitsStores[0][1];
 
      System.out.println("Fruit: " + Arrays.toString(fruitsStore));
+
+     for(int i=0; i < ad.fruitsStores.length; i++){
+      ad.fruitsStores[i][0] = "Apple";
+      ad.fruitsStores[i][1] = "Orange";
+     }
+     
+    System.out.println("fruitstore = "+ ad.fruitsStores[0][0]);
   }
 }
